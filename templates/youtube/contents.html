@@ -1,0 +1,99 @@
+{% extends "dashboard_base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}콘텐츠 관리{% endblock %}
+
+{% block content_header %}
+<div class="page-header">
+    <h1>콘텐츠 관리</h1>
+    <a href="{% url 'accounts:video_add' %}" class="btn-primary">새 동영상 추가</a>
+</div>
+{% endblock %}
+
+{% block extra_style %}
+<style>
+    .content-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 2rem;
+    }
+    .content-table th, .content-table td {
+        padding: 12px 15px;
+        border-bottom: 1px solid #333;
+        text-align: left;
+        vertical-align: middle;
+    }
+    .content-table th {
+        background-color: #1e1e1e;
+        font-weight: 500;
+    }
+    .content-table td .thumbnail {
+        width: 120px;
+        height: 67px;
+        object-fit: cover;
+        border-radius: 4px;
+        margin-right: 15px;
+    }
+    .video-info {
+        display: flex;
+        align-items: center;
+    }
+    .status-badge {
+        padding: 4px 8px;
+        border-radius: 12px;
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+    .status-public { background-color: #27ae60; color: #fff; }
+    .status-private { background-color: #c0392b; color: #fff; }
+    .status-unlisted { background-color: #f39c12; color: #fff; }
+    .manage-links a {
+        color: #ff4d4d;
+        text-decoration: none;
+        margin-right: 10px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<table class="content-table">
+    <thead>
+        <tr>
+            <th>동영상</th>
+            <th>공개 상태</th>
+            <th>조회수</th>
+            <th>게시일</th>
+            <th>관리</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for content in contents %}
+        <tr>
+            <td>
+                <div class="video-info">
+                    <img src="{% static content.thumbnail_url|default:'img/placeholder.png'%}" alt="{{ content.title }}" class="thumbnail">
+                    <span>{{ content.title }}</span>
+                </div>
+            </td>
+            <td>
+                {# 모델의 choices를 사용하면 get_FOO_display로 한글 이름을 바로 가져올 수 있습니다. #}
+                <span class="status-badge status-{{ content.status|lower }}">{{ content.get_status_display }}</span>
+            </td>
+            <td>{{ content.views|intcomma }}</td>
+            <td>{{ content.uploaded_at|date:"Y. m. d" }}</td>
+            <td>
+                <div class="manage-links">
+                    <a href="{% url 'accounts:video_update' content.pk %}">수정</a>
+                    <a href="{% url 'accounts:video_delete' content.pk %}">삭제</a>
+                </div>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5" style="text-align: center; padding: 40px;">업로드된 콘텐츠가 없습니다.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

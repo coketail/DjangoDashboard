@@ -1,0 +1,130 @@
+{% extends "dashboard_base.html" %}
+{% load humanize %}
+
+{% block title %}수익 창출{% endblock %}
+
+{% block extra_style %}
+<style>
+    .monetization-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        background-color: #1e1e1e;
+        padding: 3rem 2rem;
+        border-radius: 8px;
+        max-width: 800px;
+        margin: 2rem auto;
+    }
+    .monetization-container h1 {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
+    .monetization-container .subtitle {
+        color: #aaa;
+        margin-bottom: 2.5rem;
+        max-width: 500px;
+    }
+    .requirements-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        width: 100%;
+        margin-bottom: 3rem;
+    }
+    .requirement-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .requirement-card .icon {
+        font-size: 3rem;
+        color: #ff4d4d;
+        margin-bottom: 1rem;
+    }
+    .requirement-card .label {
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+    }
+    .requirement-card .progress-text {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+    .requirement-card .goal-text {
+        color: #aaa;
+        font-size: 0.9rem;
+    }
+    .progress-bar-container {
+        width: 80%;
+        height: 8px;
+        background-color: #333;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+    .progress-bar {
+        height: 100%;
+        background-color: #ff4d4d;
+        border-radius: 4px;
+        transition: width 0.5s ease-in-out;
+    }
+    .action-button {
+        padding: 12px 24px;
+        font-size: 1rem;
+        font-weight: 700;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    .btn-apply {
+        background-color: #ff4d4d;
+        color: #fff;
+        border: none;
+    }
+    .btn-apply:hover {
+        background-color: #e60000;
+    }
+    .btn-notify {
+        background-color: #555;
+        color: #fff;
+        border: none;
+    }
+    .btn-notify:hover {
+        background-color: #777;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="monetization-container">
+    <h1>채널 수익 창출</h1>
+    <p class="subtitle">YouTube 파트너 프로그램에 참여하여 수익을 창출하고 크리에이터 지원을 받는 등 다양한 혜택을 누려보세요.</p>
+
+    <div class="requirements-grid">
+        <div class="requirement-card">
+            <span class="material-symbols-outlined icon">group</span>
+            <p class="label">구독자 수</p>
+            <p class="progress-text">{{ current_subscribers|intcomma }}</p>
+            <div class="progress-bar-container">
+                <div class="progress-bar" style="width: {{ subscriber_progress }}%;"></div>
+            </div>
+            <p class="goal-text">필요한 구독자 수: {{ subscriber_goal|intcomma }}명</p>
+        </div>
+        <div class="requirement-card">
+            <span class="material-symbols-outlined icon">schedule</span>
+            <p class="label">공개 동영상 시청 시간</p>
+            <p class="progress-text">{{ current_watch_hours|floatformat:1|intcomma }}</p>
+            <div class="progress-bar-container">
+                <div class="progress-bar" style="width: {{ watch_hour_progress }}%;"></div>
+            </div>
+            <p class="goal-text">필요한 시청 시간: {{ watch_hour_goal|intcomma }}시간</p>
+        </div>
+    </div>
+
+    {% if is_eligible %}
+        <button class="action-button btn-apply">지금 신청하기</button>
+    {% else %}
+        <button class="action-button btn-notify">자격 요건 충족 시 알림 받기</button>
+    {% endif %}
+</div>
+{% endblock %}

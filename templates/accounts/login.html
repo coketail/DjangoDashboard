@@ -1,0 +1,24 @@
+{% extends "accounts/auth_base.html" %}
+
+{% block title %}로그인 - MyTube Studio{% endblock %}
+
+{% block content %}
+    <h2>로그인</h2>
+    {% if form.non_field_errors %}
+        <div class="form-group">
+            {{ form.non_field_errors }}
+        </div>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="form-group">
+            {{ field.label_tag }}
+            {{ field }}
+            {{ field.errors }}
+        </div>
+        {% endfor %}
+        <button type="submit" class="btn-primary">로그인</button>
+    </form>
+    <p class="auth-link">계정이 없으신가요? <a href="{% url 'accounts:register' %}">회원가입</a></p>
+{% endblock %}

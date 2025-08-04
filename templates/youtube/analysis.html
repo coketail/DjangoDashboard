@@ -1,0 +1,63 @@
+{% extends "dashboard_base.html" %}
+{% load humanize %}
+{% block title %}수익 분석{% endblock %}
+
+{% block extra_style %}
+<style>
+    .analysis-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 2rem;
+    }
+    .analysis-table th, .analysis-table td {
+        padding: 12px 15px;
+        border-bottom: 1px solid #333;
+        text-align: left;
+        vertical-align: middle;
+    }
+    .analysis-table th {
+        background-color: #1e1e1e;
+        font-weight: 500;
+    }
+    .analysis-table td:not(:first-child), .analysis-table th:not(:first-child) {
+        text-align: right;
+    }
+    .revenue-value {
+        font-weight: 700;
+        color: #2ecc71;
+    }
+    .page-description {
+        color: #aaa;
+        margin-top: 0.5rem;
+        font-size: 0.9rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<h1>수익 예측 분석</h1>
+<p class="page-description">각 영상의 주요 지표를 바탕으로 예상 수익을 분석합니다. (실제 수익과 다를 수 있습니다.)</p>
+
+<table class="analysis-table">
+    <thead>
+        <tr>
+            <th>동영상</th>
+            <th>조회수</th>
+            <th>영상 길이</th>
+            <th>좋아요 수</th>
+            <th>예상 수익 (원)</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for video in videos %}
+        <tr>
+            <td>{{ video.title }}</td>
+            <td>{{ video.views|intcomma }}</td>
+            <td>{{ video.formatted_duration }}</td>
+            <td>{{ video.likes|intcomma }}</td>
+            <td class="revenue-value">{{ video.predicted_revenue|intcomma }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

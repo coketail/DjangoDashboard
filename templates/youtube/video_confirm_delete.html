@@ -1,0 +1,64 @@
+{% extends "dashboard_base.html" %}
+{% block title %}동영상 삭제 확인{% endblock %}
+
+{% block extra_style %}
+<style>
+    .delete-container {
+        background-color: #282828;
+        padding: 2.5rem;
+        border-radius: 8px;
+        max-width: 700px;
+        margin: 2rem auto;
+        text-align: center;
+    }
+    .delete-container h1 {
+        margin-bottom: 1rem;
+    }
+    .delete-container p {
+        font-size: 1.1rem; /* 폰트 크기를 키웁니다. */
+        line-height: 1.6;
+        color: #ccc;
+    }
+    .delete-container p strong {
+        color: #ff4d4d;
+    }
+    .delete-actions {
+        margin-top: 2.5rem;
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        align-items: center;
+    }
+    /* 버튼 스타일을 video_form.html과 유사하게 재정의합니다. */
+    .delete-actions .btn-danger {
+        background-color: #ff0000;
+        color: #fff;
+        border: 2px solid #ff0000;
+    }
+    .delete-actions .btn-secondary {
+        background-color: transparent;
+        color: #ff0000;
+        border: 2px solid #ff0000;
+    }
+    .delete-actions .btn-secondary:hover {
+        background-color: #ff0000;
+        color: #fff;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="delete-container">
+    <h1>동영상 삭제</h1>
+    <p>정말로 <strong>'{{ video.title }}'</strong> 동영상을 삭제하시겠습니까?</p>
+    <p>이 작업은 되돌릴 수 없습니다.</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="delete-actions">
+            <button type="submit" class="btn-danger">예, 삭제합니다.</button>
+            <a href="{% url 'accounts:contents' %}" class="btn-secondary">아니요, 취소합니다.</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

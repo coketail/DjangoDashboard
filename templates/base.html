@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}MyTube Studio{% endblock %}</title>
+    {% load static %}
+    {% load humanize %}
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    {% block body_content %}
+        <nav class="navbar">
+            <a href="{% url 'accounts:dashboard' %}">MyTube Studio</a>
+            <div class="user-info">
+                {% if user.is_authenticated %}
+                    <span>안녕하세요, {{ user.username }}님</span>
+                    <form method="post" action="{% url 'accounts:logout' %}">
+                        {% csrf_token %}
+                        <button type="submit">로그아웃</button>
+                    </form>
+                {% endif %}
+            </div>
+        </nav>
+        <main class="container">
+            {% block content %}{% endblock %}
+        </main>
+    {% endblock body_content %}
+    {% block extra_script %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,87 @@
+{% extends "dashboard_base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}분석 대시보드{% endblock %}
+
+{% block extra_style %}
+    <style>
+        /* Chart.js가 부모 컨테이너 크기에 반응할 때 무한히 커지는 현상을 방지하기 위한 스타일 */
+        .chart-wrapper {
+            position: relative;
+            height: 280px; /* 차트 컨테이너의 기본 높이를 지정합니다. */
+        }
+        /* 'large' 클래스가 적용된 카드의 차트는 더 크게 표시합니다. */
+        .large .chart-wrapper {
+            /* 필요에 따라 이 값을 조정하세요. */
+            height: 400px;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<section class="dashboard-grid">
+    <!-- Key Metrics -->
+    <div class="card metric-card">
+        <h4>구독자 수</h4>
+        <p class="metric-value">{{info.subscribers|intcomma}}</p>
+        <p class="metric-change positive">+123 (지난 28일)</p>
+    </div>
+    <div class="card metric-card">
+        <h4>누적 조회수</h4>
+        <p class="metric-value">2.1M</p>
+        <p class="metric-change positive">+5.2% (지난 28일)</p>
+    </div>
+    <div class="card metric-card">
+        <h4>시청 시간(시간)</h4>
+        <p class="metric-value">85.7K</p>
+        <p class="metric-change negative">-1.1% (지난 28일)</p>
+    </div>
+    <div class="card metric-card">
+        <h4>수익</h4>
+        <p class="metric-value">${{info.revenue|intcomma}}</p>
+        <p class="metric-change positive">+8.9% (지난 28일)</p>
+    </div>
+
+    <!-- Charts -->
+    <div class="card chart-card large">
+        <h4>일일 조회수 (지난 28일)</h4>
+        <div class="chart-wrapper">
+            <canvas id="dailyViewsChart"></canvas>
+        </div>
+    </div>
+    <div class="card chart-card">
+        <h4>트래픽 소스</h4>
+        <div class="chart-wrapper">
+            <canvas id="trafficSourceChart"></canvas>ㅊㅊ
+        </div>
+    </div>
+    <div class="card chart-card">
+        <h4>시청자 성별 분포</h4>
+        <div class="chart-wrapper">
+            <canvas id="genderDistributionChart"></canvas>
+        </div>
+    </div>
+    <div class="card chart-card">
+        <h4>상위 시청 국가</h4>
+        <div class="chart-wrapper">
+            <canvas id="topCountriesChart"></canvas>
+        </div>
+    </div>
+    <div class="card list-card">
+        <h4>최신 동영상 실적</h4>
+        <ul>
+            {% for video in latest_videos %}
+            <li><span>{{ video.title }}</span><span>조회수 {{ video.views|intcomma }}</span></li>
+            {% empty %}
+            <li><span>업로드된 동영상이 없습니다.</span></li>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'accounts:contents' %}" class="card-link">모든 동영상 보기 &rarr;</a>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_script %}
+    <script src="{% static 'js/dashboard_charts.js' %}"></script>
+{% endblock %}

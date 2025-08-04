@@ -1,0 +1,20 @@
+{% extends "accounts/auth_base.html" %}
+
+{% block title %}회원가입 - MyTube Studio{% endblock %}
+
+{% block content %}
+    <h2>회원가입</h2>
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="form-group">
+            {{ field.label_tag }}
+            {{ field }}
+            {% if field.help_text %}<div class="helptext">{{ field.help_text|safe }}</div>{% endif %}
+            {{ field.errors }}
+        </div>
+        {% endfor %}
+        <button type="submit" class="btn-primary">가입하기</button>
+    </form>
+    <p class="auth-link">이미 계정이 있으신가요? <a href="{% url 'accounts:login' %}">로그인</a></p>
+{% endblock %}

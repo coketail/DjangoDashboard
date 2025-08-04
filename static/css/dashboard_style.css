@@ -1,0 +1,222 @@
+/* --- Global Variables & Reset --- */
+:root {
+    --bg-primary: #181818;
+    --bg-secondary: #282828;
+    --bg-tertiary: #3d3d3d;
+    --text-primary: #ffffff;
+    --text-secondary: #aaaaaa;
+    --accent-red: #ff0000;
+    --accent-red-hover: #cc0000;
+    --positive-change: #4caf50;
+    --negative-change: #f44336;
+    --border-color: #3d3d3d;
+    --font-family: 'Noto Sans KR', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-size: 14px;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.dashboard-container {
+    display: flex;
+}
+
+/* --- Sidebar --- */
+.sidebar {
+    width: 240px;
+    background-color: var(--bg-secondary);
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid var(--border-color);
+}
+
+.sidebar-header {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.sidebar-header .logo-icon {
+    font-size: 32px;
+    color: var(--accent-red);
+}
+
+.sidebar-header h1 {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.sidebar-nav {
+    flex-grow: 1;
+    padding: 20px 0;
+}
+
+.sidebar-nav ul {
+    list-style: none;
+}
+
+.sidebar-nav li a {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 20px;
+    color: var(--text-secondary);
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.sidebar-nav li a:hover {
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+}
+
+.sidebar-nav li.active a {
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+    border-left: 3px solid var(--accent-red);
+    padding-left: 17px;
+}
+
+.sidebar-nav .material-symbols-outlined {
+    font-size: 24px;
+}
+
+.sidebar-footer {
+    padding: 20px;
+    border-top: 1px solid var(--border-color);
+}
+
+.sidebar-footer a {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    color: var(--text-secondary);
+}
+
+/* --- Main Content --- */
+.main-content {
+    margin-left: 240px;
+    flex-grow: 1;
+    padding: 24px;
+}
+
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.main-header h2 {
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.user-profile .material-symbols-outlined {
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--text-secondary);
+}
+
+.user-profile .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+/* --- Dashboard Grid & Cards --- */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+}
+
+.card {
+    background-color: var(--bg-secondary);
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.card h4 {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+}
+
+.metric-card .metric-value {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.metric-card .metric-change {
+    font-size: 14px;
+}
+
+.metric-change.positive { color: var(--positive-change); }
+.metric-change.negative { color: var(--negative-change); }
+
+.chart-card.large {
+    grid-column: span 2; /* 넓은 차트 카드 */
+}
+
+.list-card ul {
+    list-style: none;
+    margin-bottom: 16px;
+}
+
+.list-card li {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.list-card li:last-child {
+    border-bottom: none;
+}
+
+.list-card li span:first-child {
+    color: var(--text-primary);
+}
+
+.list-card li span:last-child {
+    color: var(--text-secondary);
+}
+
+.card-link {
+    color: var(--accent-red);
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.card-link:hover {
+    color: var(--accent-red-hover);
+}

@@ -1,0 +1,6 @@
+body { background-color: #121212; color: #e0e0e0; font-family: 'Noto Sans KR', sans-serif; }
+.navbar { padding: 1rem 2rem; background-color: #1e1e1e; display: flex; justify-content: space-between; align-items: center; }
+.navbar a { color: #fff; text-decoration: none; font-weight: 700; }
+.user-info form { display: inline; margin-left: 1rem; }
+.user-info button { background: none; border: none; color: #ff4d4d; cursor: pointer; font-family: inherit; font-size: 1em; text-decoration: underline; }
+.container { padding: 2rem; }
